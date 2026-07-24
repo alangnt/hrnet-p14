@@ -1,7 +1,7 @@
 import './App.css'
 import { states } from "./utils/states.ts";
 import { useState } from "react";
-import type {User} from "./types/users";
+import type { User } from "./types/users";
 
 function App() {
   const [isEmployeeCreated, setIsEmployeeCreated] = useState<boolean>(false);
@@ -82,9 +82,9 @@ function App() {
             <option>Human Resources</option>
             <option>Legal</option>
           </select>
-        </form>
 
-        <button type={"submit"}>Save</button>
+          <button type={"submit"}>Save</button>
+        </form>
       </div>
 
       {isEmployeeCreated && <div id="confirmation" className="modal">Employee Created!</div>}
