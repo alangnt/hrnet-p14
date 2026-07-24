@@ -3,6 +3,7 @@ import { states } from "./utils/states.ts";
 import { useState } from "react";
 import type { User } from "./types/users";
 import { motion } from "motion/react";
+import { X } from "lucide-react"
 
 function App() {
   const [isEmployeeCreated, setIsEmployeeCreated] = useState<boolean>(true);
@@ -96,7 +97,9 @@ function App() {
             transition={{ duration: 0.4 }}
             className="bg-white px-12 py-4 rounded-lg relative z-40 pointer-events-auto"
           >
-            <button className="absolute top-2 right-2 cursor-pointer" onClick={() => setIsEmployeeCreated(false)}>X</button>
+            <button className="absolute top-2 right-2 cursor-pointer hover:text-black transition" onClick={() => setIsEmployeeCreated(false)}>
+              <X className={"h-4 w-4"}></X>
+            </button>
             Employee Created!
           </motion.div>
         </div>
