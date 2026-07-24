@@ -94,7 +94,7 @@ function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4 }}
-            className="bg-white px-12 py-4 rounded-xl relative z-40 pointer-events-auto"
+            className="bg-white px-12 py-4 rounded-lg relative z-40 pointer-events-auto"
           >
             <button className="absolute top-2 right-2 cursor-pointer" onClick={() => setIsEmployeeCreated(false)}>X</button>
             Employee Created!
