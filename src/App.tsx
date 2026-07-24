@@ -37,42 +37,41 @@ function App() {
         <a href="/employee-list">View Current Employees</a>
         <h2>Create Employee</h2>
         <form
-          id="create-employee"
           onSubmit={(e) => {
             e.preventDefault();
             saveEmployee(new FormData(e.currentTarget));
           }}
         >
           <label htmlFor="first-name">First Name</label>
-          <input type="text" id="first-name" name={"firstName"}/>
+          <input type="text" name={"firstName"}/>
 
           <label htmlFor="last-name">Last Name</label>
-          <input type="text" id="last-name" name={"lastName"}/>
+          <input type="text" name={"lastName"}/>
 
           <label htmlFor="date-of-birth">Date of Birth</label>
-          <input id="date-of-birth" type="date" name={"dateOfBirth"}/>
+          <input type="date" name={"dateOfBirth"}/>
 
           <label htmlFor="start-date">Start Date</label>
-          <input id="start-date" type="date" name={"startDate"}/>
+          <input type="date" name={"startDate"}/>
 
           <fieldset className="address">
             <legend>Address</legend>
 
             <label htmlFor="street">Street</label>
-            <input id="street" type="text" name={"street"}/>
+            <input type="text" name={"street"}/>
 
             <label htmlFor="city">City</label>
-            <input id="city" type="text" name={"city"}/>
+            <input type="text" name={"city"}/>
 
             <label htmlFor="state">State</label>
-            <select name="state" id="state">
+            <select name="state">
               {states.map((state, index) => (
                 <option key={index} value={state.abbreviation}>{state.name}</option>
               ))}
             </select>
 
             <label htmlFor="zip-code">Zip Code</label>
-            <input id="zip-code" type="number"/>
+            <input type="number" name={"zipCode"}/>
           </fieldset>
 
           <label htmlFor="department">Department</label>

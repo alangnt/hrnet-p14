@@ -1,9 +1,9 @@
 export interface User {
   firstName: string;
   lastName: string;
+  dateOfBirth: string;
   startDate: string;
   department: string;
-  dateOfBirth: string;
   street: string;
   city: string;
   state: string;
