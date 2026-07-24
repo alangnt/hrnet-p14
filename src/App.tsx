@@ -1,120 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
+import { states } from "./utils/states.ts";
+import { useState } from "react";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isEmployeeCreated, setIsEmployeeCreated] = useState<boolean>(false);
+
+  const employeeForm = {
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    startDate: '',
+    department: '',
+    street: '',
+    city: '',
+    state: '',
+    zipCode: '',
+  }
+
+  function saveEmployee() {
+    const employees = JSON.parse(localStorage.getItem('employees') as string) || [];
+
+    employees.push(employeeForm);
+    localStorage.setItem('employees', JSON.stringify(employees));
+
+    setIsEmployeeCreated(true);
+  }
 
   return (
     <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+      <div className="title">
+        <h1>HRnet</h1>
+      </div>
+      <div className="container">
+        <a href="/employee-list">View Current Employees</a>
+        <h2>Create Employee</h2>
+        <form action="#" id="create-employee">
+          <label htmlFor="first-name">First Name</label>
+          <input type="text" id="first-name"/>
 
-      <div className="ticks"></div>
+          <label htmlFor="last-name">Last Name</label>
+          <input type="text" id="last-name"/>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+          <label htmlFor="date-of-birth">Date of Birth</label>
+          <input id="date-of-birth" type="date"/>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
+          <label htmlFor="start-date">Start Date</label>
+          <input id="start-date" type="date"/>
+
+          <fieldset className="address">
+            <legend>Address</legend>
+
+            <label htmlFor="street">Street</label>
+            <input id="street" type="text"/>
+
+            <label htmlFor="city">City</label>
+            <input id="city" type="text"/>
+
+            <label htmlFor="state">State</label>
+            <select name="state" id="state">
+              {states.map((state, index) => (
+                <option key={index} value={state.abbreviation}>{state.name}</option>
+              ))}
+            </select>
+
+            <label htmlFor="zip-code">Zip Code</label>
+            <input id="zip-code" type="number"/>
+          </fieldset>
+
+          <label htmlFor="department">Department</label>
+          <select name="department" id="department">
+            <option>Sales</option>
+            <option>Marketing</option>
+            <option>Engineering</option>
+            <option>Human Resources</option>
+            <option>Legal</option>
+          </select>
+        </form>
+
+        <button onClick={() => saveEmployee()}>Save</button>
+      </div>
+
+      {isEmployeeCreated && <div id="confirmation" className="modal">Employee Created!</div>}
     </>
   )
 }
