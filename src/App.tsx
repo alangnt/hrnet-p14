@@ -2,6 +2,7 @@ import './App.css'
 import { states } from "./utils/states.ts";
 import { useState } from "react";
 import type { User } from "./types/users";
+import { motion } from "motion/react";
 
 function App() {
   const [isEmployeeCreated, setIsEmployeeCreated] = useState<boolean>(true);
@@ -89,10 +90,15 @@ function App() {
 
       {isEmployeeCreated && (
         <div className="absolute w-screen h-screen bg-gray-900/80 backdrop-blur-xs pointer-events-none z-30 flex justify-center items-center top-0 left-0 overflow-hidden">
-          <div className="bg-white px-12 py-4 rounded-xl relative z-40 pointer-events-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.4 }}
+            className="bg-white px-12 py-4 rounded-xl relative z-40 pointer-events-auto"
+          >
             <button className="absolute top-2 right-2 cursor-pointer" onClick={() => setIsEmployeeCreated(false)}>X</button>
             Employee Created!
-          </div>
+          </motion.div>
         </div>
       )}
     </>
