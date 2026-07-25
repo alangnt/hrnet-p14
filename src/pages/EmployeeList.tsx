@@ -26,7 +26,7 @@ function EmployeeList() {
   ];
 
   return (
-    <div id="employee-div" className="container">
+    <main id="employee-div" className="container">
       <h1>Current Employees</h1>
       <table id="employee-table" className="display">
         <tbody>
@@ -52,7 +52,7 @@ function EmployeeList() {
         </tbody>
       </table>
       <Link to="/">Home</Link>
-    </div>
+    </main>
   )
 }
 

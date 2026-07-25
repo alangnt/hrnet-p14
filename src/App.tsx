@@ -32,15 +32,15 @@ function App() {
 
   return (
     <>
-      <div className="title">
+      <header className="title">
         <h1>HRnet</h1>
-      </div>
+      </header>
 
-      <div className="container">
+      <main className="container">
         <Link to="/employee-list">View Current Employees</Link>
         <h2>Create Employee</h2>
         <EmployeeForm onSubmit={saveEmployee}/>
-      </div>
+      </main>
 
       {isEmployeeCreated && (
         <div className="absolute w-screen h-screen bg-gray-900/80 backdrop-blur-xs pointer-events-none z-30 flex justify-center items-center top-0 left-0 overflow-hidden">
