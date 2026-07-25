@@ -1,0 +1,10 @@
+# HRnet
+
+> HRnet is an employee management tool for HR teams: create employee records and browse the current roster by name, department, and location.
+
+HRnet is a single-page React application. Employee records are saved to the browser's localStorage and never sent to a server, so no employee data is reachable by crawlers.
+
+## Pages
+
+- [Create Employee](https://hrnet-p14-six.vercel.app/): Form for adding an employee, including name, dates, department, and address.
+- [Employee List](https://hrnet-p14-six.vercel.app/employee-list): Table of every employee saved in the current browser.
