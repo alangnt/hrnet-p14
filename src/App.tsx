@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 import { X } from "lucide-react"
 
 function App() {
-  const [isEmployeeCreated, setIsEmployeeCreated] = useState<boolean>(true);
+  const [isEmployeeCreated, setIsEmployeeCreated] = useState<boolean>(false);
 
   function saveEmployee(data: FormData) {
     const employees: User[] = JSON.parse(localStorage.getItem('employees') as string) || [];
@@ -36,7 +36,7 @@ function App() {
       </div>
 
       <div className="container">
-        <a href="/employee-list">View Current Employees</a>
+        <a href="/employee-list" >View Current Employees</a>
         <h2>Create Employee</h2>
         <form
           onSubmit={(e) => {
