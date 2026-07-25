@@ -45,8 +45,8 @@ function App() {
       {isEmployeeCreated && (
         <div className="absolute w-screen h-screen bg-gray-900/80 backdrop-blur-xs pointer-events-none z-30 flex justify-center items-center top-0 left-0 overflow-hidden">
           <div className="fade-in bg-white px-12 py-4 rounded-lg relative z-40 pointer-events-auto">
-            <button className="absolute top-2 right-2 cursor-pointer hover:text-black transition" onClick={() => setIsEmployeeCreated(false)}>
-              <X className={"h-4 w-4"}></X>
+            <button aria-label="Close" className="absolute top-2 right-2 cursor-pointer hover:text-black transition" onClick={() => setIsEmployeeCreated(false)}>
+              <X aria-hidden="true" className={"h-4 w-4"}></X>
             </button>
             Employee Created!
           </div>
