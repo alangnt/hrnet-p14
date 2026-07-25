@@ -1,4 +1,5 @@
 import '../App.css'
+import { Link } from "react-router";
 import type { User } from "../types/users";
 
 type Column = {
@@ -47,7 +48,7 @@ function EmployeeList() {
           ))}
         </tbody>
       </table>
-      <a href="/">Home</a>
+      <Link to="/">Home</Link>
     </div>
   )
 }

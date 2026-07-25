@@ -1,8 +1,8 @@
 import './App.css'
 import { states } from "./utils/states.ts";
 import { useState } from "react";
+import { Link } from "react-router";
 import type { User } from "./types/users";
-import { motion } from "motion/react";
 import { X } from "lucide-react"
 
 function App() {
@@ -36,7 +36,7 @@ function App() {
       </div>
 
       <div className="container">
-        <a href="/employee-list" >View Current Employees</a>
+        <Link to="/employee-list">View Current Employees</Link>
         <h2>Create Employee</h2>
         <form
           onSubmit={(e) => {
@@ -91,17 +91,12 @@ function App() {
 
       {isEmployeeCreated && (
         <div className="absolute w-screen h-screen bg-gray-900/80 backdrop-blur-xs pointer-events-none z-30 flex justify-center items-center top-0 left-0 overflow-hidden">
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4 }}
-            className="bg-white px-12 py-4 rounded-lg relative z-40 pointer-events-auto"
-          >
+          <div className="fade-in bg-white px-12 py-4 rounded-lg relative z-40 pointer-events-auto">
             <button className="absolute top-2 right-2 cursor-pointer hover:text-black transition" onClick={() => setIsEmployeeCreated(false)}>
               <X className={"h-4 w-4"}></X>
             </button>
             Employee Created!
-          </motion.div>
+          </div>
         </div>
       )}
     </>
