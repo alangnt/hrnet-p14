@@ -8,7 +8,10 @@ type Column = {
 }
 
 function EmployeeList() {
-  const employees: User[] = JSON.parse(localStorage.getItem('employees') as string) || [];
+  const stored: User[] = JSON.parse(localStorage.getItem('employees') as string) || [];
+  const employees: User[] = stored.map((employee, index) => (
+    employee.id ? employee : { ...employee, id: `legacy-${index}` }
+  ));
 
   const columns: Column[] = [
     { title: 'First Name', data: 'firstName' },
@@ -28,13 +31,13 @@ function EmployeeList() {
       <table id="employee-table" className="display">
         <tbody>
           <tr>
-            {columns.map((column: Column, index: number) => (
-              <th key={index}>{column.title}</th>
+            {columns.map((column: Column) => (
+              <th key={column.data}>{column.title}</th>
             ))}
           </tr>
 
-          {employees.map((employee: User, index: number) => (
-            <tr key={index}>
+          {employees.map((employee: User) => (
+            <tr key={employee.id}>
               <td>{employee.firstName}</td>
               <td>{employee.lastName}</td>
               <td>{employee.startDate}</td>

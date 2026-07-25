@@ -1,17 +1,18 @@
 import './App.css'
-import { states } from "./utils/states.ts";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Link } from "react-router";
 import type { User } from "./types/users";
 import { X } from "lucide-react"
+import EmployeeForm from "./components/EmployeeForm.tsx";
 
 function App() {
   const [isEmployeeCreated, setIsEmployeeCreated] = useState<boolean>(false);
 
-  function saveEmployee(data: FormData) {
+  const saveEmployee = useCallback((data: FormData) => {
     const employees: User[] = JSON.parse(localStorage.getItem('employees') as string) || [];
 
     const employee: User = {
+      id: crypto.randomUUID(),
       firstName: data.get("firstName") as string,
       lastName: data.get("lastName") as string,
       dateOfBirth: data.get("dateOfBirth") as string,
@@ -27,7 +28,7 @@ function App() {
     localStorage.setItem('employees', JSON.stringify(employees));
 
     setIsEmployeeCreated(true);
-  }
+  }, []);
 
   return (
     <>
@@ -38,55 +39,7 @@ function App() {
       <div className="container">
         <Link to="/employee-list">View Current Employees</Link>
         <h2>Create Employee</h2>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            saveEmployee(new FormData(e.currentTarget));
-          }}
-        >
-          <label htmlFor="first-name">First Name</label>
-          <input type="text" name={"firstName"}/>
-
-          <label htmlFor="last-name">Last Name</label>
-          <input type="text" name={"lastName"}/>
-
-          <label htmlFor="date-of-birth">Date of Birth</label>
-          <input type="date" name={"dateOfBirth"}/>
-
-          <label htmlFor="start-date">Start Date</label>
-          <input type="date" name={"startDate"}/>
-
-          <fieldset className="address">
-            <legend>Address</legend>
-
-            <label htmlFor="street">Street</label>
-            <input type="text" name={"street"}/>
-
-            <label htmlFor="city">City</label>
-            <input type="text" name={"city"}/>
-
-            <label htmlFor="state">State</label>
-            <select name="state">
-              {states.map((state, index) => (
-                <option key={index} value={state.abbreviation}>{state.name}</option>
-              ))}
-            </select>
-
-            <label htmlFor="zip-code">Zip Code</label>
-            <input type="number" name={"zipCode"}/>
-          </fieldset>
-
-          <label htmlFor="department">Department</label>
-          <select name="department" id="department">
-            <option>Sales</option>
-            <option>Marketing</option>
-            <option>Engineering</option>
-            <option>Human Resources</option>
-            <option>Legal</option>
-          </select>
-
-          <button type={"submit"}>Save</button>
-        </form>
+        <EmployeeForm onSubmit={saveEmployee}/>
       </div>
 
       {isEmployeeCreated && (
