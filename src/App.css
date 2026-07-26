@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 .title {
   display: flex;
   align-items: center;
@@ -39,4 +41,8 @@ label {
   .fade-in {
     animation: none;
   }
+}
+
+.form-input, .button {
+  @apply bg-white border rounded-lg px-4 py-2 w-min;
 }
