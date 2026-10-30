@@ -20,9 +20,10 @@ bun run lint
 | `src/App.tsx` | "Create Employee" page |
 | `src/pages/EmployeeList.tsx` | "Current Employees" page (lazy-loaded route) |
 | `src/store/employees.ts` | Global state (Zustand) persisted to `localStorage`. Migrates data saved by the jQuery version |
+| `src/components/Layout.tsx` | Shared header and navigation |
 | `src/components/EmployeeForm.tsx` | Employee form with native HTML validation |
 | `src/components/DataTable.tsx` | Generic table: search, sorting, page size, pagination |
-| `src/components/DateInput.tsx` / `Select.tsx` | Date and dropdown fields |
+| `src/components/TextInput.tsx` / `DateInput.tsx` / `Select.tsx` | Form fields (label + input) |
 | `packages/react-modal/` | Modal component, published on npm as [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal) |
 
 ## Replacing the jQuery plugins
@@ -46,10 +47,10 @@ Audits ran on the **production build** (`bun run build && bun run preview`) with
 | SEO | 90 | **100** | 90 | **100** |
 | First Contentful Paint | 0.6 s | **0.3 s** | 0.5 s | **0.3 s** |
 | Largest Contentful Paint | 0.6 s | **0.3 s** | 0.5 s | **0.4 s** |
-| Speed Index | 0.6 s | **0.3 s** | 0.5 s | **0.4 s** |
+| Speed Index | 0.6 s | **0.3 s** | 0.5 s | **0.3 s** |
 | Total Blocking Time | 0 ms | 0 ms | 0 ms | 0 ms |
-| Cumulative Layout Shift | 0.006 | 0.005 | 0 | 0 |
-| Network requests | 12 | **5** | 9 | **5** |
-| Total transfer size | 260 KiB | **81 KiB** | 64 KiB | 83 KiB |
+| Cumulative Layout Shift | 0.006 | **0** | 0 | 0 |
+| Network requests | 12 | **6** | 9 | **6** |
+| Total transfer size | 260 KiB | **85 KiB** | 64 KiB | 86 KiB |
 
 The jQuery app was served as static files from its original repository. It loads jQuery, jQuery UI, DataTables, jquery.modal and the datetimepicker from several CDNs. The React app ships one JS bundle and one CSS file. The Employee List page is lazy-loaded, so after the first visit it only adds a 1.4 kB chunk.

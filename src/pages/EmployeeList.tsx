@@ -1,5 +1,3 @@
-import '../App.css'
-import { Link } from "react-router";
 import type { User } from "../types/users";
 import DataTable, { type Column } from "../components/DataTable.tsx";
 import { useEmployeeStore } from "../store/employees.ts";
@@ -20,12 +18,15 @@ function EmployeeList() {
   const employees = useEmployeeStore((state) => state.employees);
 
   return (
-    <main id="employee-div" className="container">
-      <h1>Current Employees</h1>
+    <main className="page max-w-7xl">
+      <div className="page-header">
+        <h1 className="page-title">Current Employees</h1>
+        <p className="page-subtitle">{employees.length} employee{employees.length === 1 ? "" : "s"} registered.</p>
+      </div>
 
-      <DataTable columns={columns} data={employees}/>
-
-      <Link to="/" className="my-6">Home</Link>
+      <div className="card overflow-hidden">
+        <DataTable columns={columns} data={employees}/>
+      </div>
     </main>
   )
 }

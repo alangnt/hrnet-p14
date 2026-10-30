@@ -1,9 +1,10 @@
-import { memo } from "react";
+import { memo, type ReactNode } from "react";
 import type { User } from "../types/users";
 import { states } from "../utils/states.ts";
 import { departments } from "../utils/departments.ts";
 import DateInput from "./DateInput.tsx";
 import Select from "./Select.tsx";
+import TextInput from "./TextInput.tsx";
 
 type EmployeeFormProps = {
   onSubmit: (employee: Omit<User, "id">) => void;
@@ -11,6 +12,18 @@ type EmployeeFormProps = {
 
 const stateOptions = states.map((state) => ({ value: state.abbreviation, label: state.name }));
 const departmentOptions = departments.map((department) => ({ value: department, label: department }));
+
+function FormSection({ title, description, children }: { title: string; description: string; children: ReactNode }) {
+  return (
+    <fieldset className="form-section">
+      <div>
+        <legend className="form-section-title">{title}</legend>
+        <p className="form-section-description">{description}</p>
+      </div>
+      <div className="form-grid">{children}</div>
+    </fieldset>
+  )
+}
 
 function EmployeeForm({ onSubmit }: EmployeeFormProps) {
   return (
@@ -34,61 +47,41 @@ function EmployeeForm({ onSubmit }: EmployeeFormProps) {
 
         form.reset();
       }}
-      className={"flex flex-col justify-center gap-y-4"}
+      className="card overflow-hidden"
     >
-      <div className={"flex items-center gap-x-4"}>
-        <div className={"w-full"}>
-          <label htmlFor="first-name">First Name</label>
-          <input type="text" id="first-name" name={"firstName"} className={"form-input"} required autoComplete="given-name"/>
+      <FormSection title="Personal information" description="The employee's identity.">
+        <TextInput id="first-name" name="firstName" label="First Name" required autoComplete="given-name"/>
+        <TextInput id="last-name" name="lastName" label="Last Name" required autoComplete="family-name"/>
+        <DateInput id="date-of-birth" name="dateOfBirth" label="Date of Birth" required/>
+      </FormSection>
+
+      <FormSection title="Address" description="Where the employee lives.">
+        <div className="sm:col-span-2">
+          <TextInput id="street" name="street" label="Street" required autoComplete="street-address"/>
         </div>
-
-        <div className={"w-full"}>
-          <label htmlFor="last-name">Last Name</label>
-          <input type="text" id="last-name" name={"lastName"} className={"form-input"} required autoComplete="family-name"/>
-        </div>
-      </div>
-
-      <div className={"flex items-center gap-x-4"}>
-        <div className={"w-full"}>
-          <DateInput id="date-of-birth" name={"dateOfBirth"} label="Date of Birth" required/>
-        </div>
-
-        <div className={"w-full"}>
-          <DateInput id="start-date" name={"startDate"} label="Start Date" required/>
-        </div>
-      </div>
-
-      <fieldset className="address">
-        <legend>Address</legend>
-
-        <label htmlFor="street">Street</label>
-        <input type="text" id="street" name={"street"} className={"form-input"} required autoComplete="street-address"/>
-
-        <label htmlFor="city">City</label>
-        <input type="text" id="city" name={"city"} className={"form-input"} required autoComplete="address-level2"/>
-
+        <TextInput id="city" name="city" label="City" required autoComplete="address-level2"/>
         <Select id="state" name="state" label="State" options={stateOptions}/>
-
-        <label htmlFor="zip-code">Zip Code</label>
-        <input
-          type="text"
+        <TextInput
           id="zip-code"
-          name={"zipCode"}
-          className={"form-input"}
+          name="zipCode"
+          label="Zip Code"
           inputMode="numeric"
           pattern="\d{5}"
           title="5 digits zip code"
+          placeholder="12345"
           required
           autoComplete="postal-code"
         />
-      </fieldset>
+      </FormSection>
 
-      <div>
+      <FormSection title="Employment" description="Role and contract details.">
         <Select id="department" name="department" label="Department" options={departmentOptions}/>
-      </div>
+        <DateInput id="start-date" name="startDate" label="Start Date" required/>
+      </FormSection>
 
-      <div>
-        <button type={"submit"} className={"button"}>Save</button>
+      <div className="form-actions">
+        <button type="reset" className="button button-secondary">Clear</button>
+        <button type="submit" className="button button-primary">Save</button>
       </div>
     </form>
   )

@@ -51,12 +51,12 @@ function DataTable<T extends { id: string }>({ columns, data, pageSizes = [10, 2
   };
 
   return (
-    <div className="w-full flex flex-col gap-y-4 px-4">
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <label className="flex items-center gap-x-2 m-0">
+    <div className="w-full">
+      <div className="table-toolbar">
+        <label className="flex items-center gap-x-2 text-sm">
           Show
           <select
-            className="form-input"
+            className="form-input w-auto"
             value={pageSize}
             onChange={(e) => {
               setPageSize(Number(e.target.value));
@@ -68,11 +68,12 @@ function DataTable<T extends { id: string }>({ columns, data, pageSizes = [10, 2
           entries
         </label>
 
-        <label className="flex items-center gap-x-2 m-0">
-          Search:
+        <label className="flex items-center gap-x-2 text-sm">
+          Search
           <input
             type="search"
-            className="form-input"
+            className="form-input w-56"
+            placeholder="Name, city, department…"
             value={search}
             onChange={(e) => {
               setSearch(e.target.value);
@@ -96,7 +97,7 @@ function DataTable<T extends { id: string }>({ columns, data, pageSizes = [10, 2
                   >
                     <button type="button" className="sort-button" onClick={() => toggleSort(column.data)}>
                       {column.title}
-                      <span aria-hidden="true">{direction === "asc" ? "▲" : direction === "desc" ? "▼" : "↕"}</span>
+                      <span aria-hidden="true" className="text-slate-400">{direction === "asc" ? "▲" : direction === "desc" ? "▼" : "↕"}</span>
                     </button>
                   </th>
                 );
@@ -107,7 +108,7 @@ function DataTable<T extends { id: string }>({ columns, data, pageSizes = [10, 2
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={columns.length}>
+                <td colSpan={columns.length} className="py-12! text-center text-slate-500">
                   {data.length === 0 ? "No data available in table" : "No matching records found"}
                 </td>
               </tr>
@@ -122,7 +123,7 @@ function DataTable<T extends { id: string }>({ columns, data, pageSizes = [10, 2
         </table>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-4">
+      <div className="table-footer">
         <p role="status">
           {sorted.length === 0
             ? "Showing 0 to 0 of 0 entries"
@@ -131,11 +132,11 @@ function DataTable<T extends { id: string }>({ columns, data, pageSizes = [10, 2
         </p>
 
         <nav aria-label="Pagination" className="flex items-center gap-x-2">
-          <button type="button" className="button" disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)}>
+          <button type="button" className="button button-secondary" disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)}>
             Previous
           </button>
-          <span>Page {currentPage} of {pageCount}</span>
-          <button type="button" className="button" disabled={currentPage === pageCount} onClick={() => setPage(currentPage + 1)}>
+          <span className="px-2">Page {currentPage} of {pageCount}</span>
+          <button type="button" className="button button-secondary" disabled={currentPage === pageCount} onClick={() => setPage(currentPage + 1)}>
             Next
           </button>
         </nav>

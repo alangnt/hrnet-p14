@@ -25,7 +25,7 @@ describe('App', () => {
     await user.selectOptions(screen.getByLabelText('Department'), 'Engineering');
     await user.click(screen.getByRole('button', { name: 'Save' }));
 
-    expect(screen.getByRole('dialog', { name: 'Employee created' })).toHaveTextContent('Employee Created!');
+    expect(screen.getByRole('dialog', { name: 'Employee Created!' })).toBeInTheDocument();
     expect(useEmployeeStore.getState().employees[0]).toMatchObject({
       firstName: 'Jane',
       lastName: 'Smith',
