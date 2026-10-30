@@ -1,75 +1,55 @@
-# React + TypeScript + Vite
+# HRnet (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+HRnet is WealthHealth's internal tool for creating employee records and browsing the current employees. This repository is a React + TypeScript rewrite of the original jQuery application.
 
-Currently, two official plugins are available:
+## Getting started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+bun install
+bun run dev       # development server
+bun run build     # production build in dist/
+bun run preview   # serve the production build
+bun run test      # unit tests (Vitest + Testing Library)
+bun run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Architecture
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Path | Role |
+| --- | --- |
+| `src/App.tsx` | "Create Employee" page |
+| `src/pages/EmployeeList.tsx` | "Current Employees" page (lazy-loaded route) |
+| `src/store/employees.ts` | Global state (Zustand) persisted to `localStorage`. Migrates data saved by the jQuery version |
+| `src/components/EmployeeForm.tsx` | Employee form with native HTML validation |
+| `src/components/DataTable.tsx` | Generic table: search, sorting, page size, pagination |
+| `src/components/DateInput.tsx` / `Select.tsx` | Date and dropdown fields |
+| `packages/react-modal/` | Modal component, published on npm as [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal) |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Replacing the jQuery plugins
 
-```
+| jQuery plugin | Replacement |
+| --- | --- |
+| `jquery.modal.js` | **Converted** into its own React component and published on npm: [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal). Includes `role="dialog"`, focus trap and restore, Escape to close, and body scroll lock |
+| DataTables | `DataTable` component: search, sorting by column (`aria-sort`), 10/25/50/100 entries per page, pagination |
+| Date picker | `DateInput`: native `<input type="date">`. It is accessible, localized and mobile-friendly, and adds no JS |
+| Dropdown menus (selectmenu) | `Select`: native `<select>`, styled and fully keyboard accessible |
+
+## Lighthouse audits
+
+Audits ran on the **production build** (`bun run build && bun run preview`) with the desktop preset. The reports are in [`lighthouse/`](./lighthouse).
+
+| Metric | Create Employee – jQuery | Create Employee – React | Employee List – jQuery | Employee List – React |
+| --- | --- | --- | --- | --- |
+| Performance | 100 | 100 | 100 | 100 |
+| Accessibility | 91 | **100** | 96 | **100** |
+| Best Practices | 85 | **100** | 85 | **100** |
+| SEO | 90 | **100** | 90 | **100** |
+| First Contentful Paint | 0.6 s | **0.3 s** | 0.5 s | **0.3 s** |
+| Largest Contentful Paint | 0.6 s | **0.3 s** | 0.5 s | **0.4 s** |
+| Speed Index | 0.6 s | **0.3 s** | 0.5 s | **0.4 s** |
+| Total Blocking Time | 0 ms | 0 ms | 0 ms | 0 ms |
+| Cumulative Layout Shift | 0.006 | 0.005 | 0 | 0 |
+| Network requests | 12 | **5** | 9 | **5** |
+| Total transfer size | 260 KiB | **81 KiB** | 64 KiB | 83 KiB |
+
+The jQuery app was served as static files from its original repository. It loads jQuery, jQuery UI, DataTables, jquery.modal and the datetimepicker from several CDNs. The React app ships one JS bundle and one CSS file. The Employee List page is lazy-loaded, so after the first visit it only adds a 1.4 kB chunk.
