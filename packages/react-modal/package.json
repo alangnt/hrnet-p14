@@ -1,0 +1,29 @@
+{
+  "name": "hrnet-p14-modal",
+  "version": "1.0.0",
+  "description": "Accessible, dependency-free React modal component (replacement for jquery.modal.js in HRnet)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/modal.css"
+  },
+  "files": ["dist"],
+  "sideEffects": ["*.css"],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json && cp src/modal.css dist/modal.css",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["react", "modal", "dialog", "accessible", "a11y"],
+  "author": "Alan Geirnaert",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  }
+}
