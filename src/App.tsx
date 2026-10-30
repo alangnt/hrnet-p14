@@ -1,34 +1,22 @@
 import './App.css'
+import 'hrnet-p14-modal/style.css'
 import { useCallback, useState } from "react";
 import { Link } from "react-router";
+import { Modal } from "hrnet-p14-modal";
 import type { User } from "./types/users";
-import { X } from "lucide-react"
 import EmployeeForm from "./components/EmployeeForm.tsx";
+import { useEmployeeStore } from "./store/employees.ts";
 
 function App() {
   const [isEmployeeCreated, setIsEmployeeCreated] = useState<boolean>(false);
+  const addEmployee = useEmployeeStore((state) => state.addEmployee);
 
-  const saveEmployee = useCallback((data: FormData) => {
-    const employees: User[] = JSON.parse(localStorage.getItem('employees') as string) || [];
-
-    const employee: User = {
-      id: crypto.randomUUID(),
-      firstName: data.get("firstName") as string,
-      lastName: data.get("lastName") as string,
-      dateOfBirth: data.get("dateOfBirth") as string,
-      startDate: data.get("startDate") as string,
-      department: data.get("department") as string,
-      street: data.get("street") as string,
-      city: data.get("city") as string,
-      state: data.get("state") as string,
-      zipCode: data.get("zipCode") as string
-    }
-
-    employees.push(employee);
-    localStorage.setItem('employees', JSON.stringify(employees));
-
+  const saveEmployee = useCallback((employee: Omit<User, "id">) => {
+    addEmployee(employee);
     setIsEmployeeCreated(true);
-  }, []);
+  }, [addEmployee]);
+
+  const closeModal = useCallback(() => setIsEmployeeCreated(false), []);
 
   return (
     <>
@@ -42,16 +30,9 @@ function App() {
         <EmployeeForm onSubmit={saveEmployee}/>
       </main>
 
-      {isEmployeeCreated && (
-        <div className="absolute w-screen h-screen bg-gray-900/80 backdrop-blur-xs pointer-events-none z-30 flex justify-center items-center top-0 left-0 overflow-hidden">
-          <div className="fade-in bg-white px-12 py-4 rounded-lg relative z-40 pointer-events-auto">
-            <button aria-label="Close" className="absolute top-2 right-2 cursor-pointer hover:text-black transition" onClick={() => setIsEmployeeCreated(false)}>
-              <X aria-hidden="true" className={"h-4 w-4"}></X>
-            </button>
-            Employee Created!
-          </div>
-        </div>
-      )}
+      <Modal isOpen={isEmployeeCreated} onClose={closeModal} ariaLabel="Employee created">
+        Employee Created!
+      </Modal>
     </>
   )
 }

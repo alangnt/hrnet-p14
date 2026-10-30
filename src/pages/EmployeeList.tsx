@@ -1,14 +1,10 @@
 import '../App.css'
-import { useMemo } from "react";
 import { Link } from "react-router";
 import type { User } from "../types/users";
+import DataTable, { type Column } from "../components/DataTable.tsx";
+import { useEmployeeStore } from "../store/employees.ts";
 
-type Column = {
-  title: string;
-  data: keyof User;
-}
-
-const columns: Column[] = [
+const columns: Column<User>[] = [
   { title: 'First Name', data: 'firstName' },
   { title: 'Last Name', data: 'lastName' },
   { title: 'Start Date', data: 'startDate' },
@@ -21,38 +17,15 @@ const columns: Column[] = [
 ];
 
 function EmployeeList() {
-  const employees = useMemo<User[]>(() => {
-    const stored: User[] = JSON.parse(localStorage.getItem('employees') as string) || [];
-    return stored.map((employee, index) => (
-      employee.id ? employee : { ...employee, id: `legacy-${index}` }
-    ));
-  }, []);
+  const employees = useEmployeeStore((state) => state.employees);
 
   return (
     <main id="employee-div" className="container">
       <h1>Current Employees</h1>
 
-      <table id="employee-table" className="display">
-        <thead>
-          <tr>
-            {columns.map((column: Column) => (
-              <th key={column.data} scope="col">{column.title}</th>
-            ))}
-          </tr>
-        </thead>
+      <DataTable columns={columns} data={employees}/>
 
-        <tbody>
-          {employees.map((employee: User) => (
-            <tr key={employee.id}>
-              {columns.map((column: Column) => (
-                <td key={column.data}>{employee[column.data]}</td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      <Link to="/">Home</Link>
+      <Link to="/" className="my-6">Home</Link>
     </main>
   )
 }
