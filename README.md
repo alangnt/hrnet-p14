@@ -26,6 +26,24 @@ bun run lint
 | `src/components/TextInput.tsx` / `DateInput.tsx` / `Select.tsx` | Form fields (label + input) |
 | `packages/react-modal/` | Modal component, published on npm as [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal) |
 
+## Publishing the modal package to npm
+
+The modal lives in `packages/react-modal/` and is published as [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal).
+
+```bash
+cd packages/react-modal
+
+npm login                  # log in to your npm account (Bun has no login command)
+bun pm whoami              # check which account you are logged in as
+
+bun pm version patch       # bump the version (patch | minor | major)
+bun publish                # builds dist/ through prepublishOnly, then publishes
+```
+
+`bun publish` reuses the credentials that `npm login` saves in `~/.npmrc`. Alternatively, set the `NPM_CONFIG_TOKEN` environment variable to an npm access token, which also works in CI without npm.
+
+`bun publish --dry-run` lists the files that would be published without uploading anything. The registry refuses to publish a version that already exists, so bump the version before each publish.
+
 ## Replacing the jQuery plugins
 
 | jQuery plugin | Replacement |
