@@ -1,0 +1,143 @@
+.hrnet-table {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  color: #334155;
+}
+
+.hrnet-table__toolbar,
+.hrnet-table__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+}
+
+.hrnet-table__length,
+.hrnet-table__search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hrnet-table__select,
+.hrnet-table__input,
+.hrnet-table__button {
+  font: inherit;
+  padding: 6px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+}
+
+.hrnet-table__select:focus,
+.hrnet-table__input:focus,
+.hrnet-table__button:focus-visible {
+  outline: 2px solid #4f46e5;
+  outline-offset: 1px;
+}
+
+.hrnet-table__button {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.hrnet-table__button:hover:not(:disabled) {
+  background: #f8fafc;
+}
+
+.hrnet-table__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.hrnet-table__scroll {
+  overflow-x: auto;
+}
+
+.hrnet-table__table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.hrnet-table__table th {
+  border-block: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.hrnet-table__table th:not(:has(button)) {
+  padding: 12px 16px;
+}
+
+.hrnet-table__table td {
+  border-bottom: 1px solid #f1f5f9;
+  padding: 12px 16px;
+  white-space: nowrap;
+}
+
+.hrnet-table__table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.hrnet-table__sort {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.hrnet-table__sort:hover {
+  color: #0f172a;
+}
+
+.hrnet-table__sort-icon {
+  color: #94a3b8;
+}
+
+.hrnet-table__empty {
+  padding: 48px 16px !important;
+  text-align: center;
+  color: #64748b;
+}
+
+.hrnet-table__info {
+  margin: 0;
+  color: #475569;
+}
+
+.hrnet-table__pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hrnet-table__page {
+  padding-inline: 8px;
+}
+
+.hrnet-table__caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

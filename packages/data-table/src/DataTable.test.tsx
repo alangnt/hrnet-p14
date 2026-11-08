@@ -1,7 +1,8 @@
+/// <reference types="@testing-library/jest-dom/vitest" />
 import { describe, expect, it } from 'vitest';
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import DataTable, { type Column } from './DataTable.tsx';
+import DataTable, { type Column } from './DataTable';
 
 type Row = { id: string; name: string; city: string };
 
@@ -58,5 +59,36 @@ describe('DataTable', () => {
   it('shows an empty message without data', () => {
     render(<DataTable columns={columns} data={[]}/>);
     expect(screen.getByText('No data available in table')).toBeInTheDocument();
+  });
+
+  it('uses custom cell renderers and messages', () => {
+    render(
+      <DataTable
+        columns={[{ title: 'Name', data: 'name', render: (row: Row) => <strong>{row.name.toUpperCase()}</strong> }]}
+        data={data.slice(0, 1)}
+      />
+    );
+    expect(screen.getByText('PERSON 01').tagName).toBe('STRONG');
+  });
+
+  it('does not render a sort button on non sortable columns', () => {
+    render(<DataTable columns={[{ title: 'Name', data: 'name', sortable: false }]} data={data}/>);
+    const header = screen.getByRole('columnheader', { name: 'Name' });
+    expect(within(header).queryByRole('button')).not.toBeInTheDocument();
+  });
+
+  it('changes the page size', async () => {
+    render(<DataTable columns={columns} data={data} pageSizes={[5, 10]}/>);
+    expect(bodyRows()).toHaveLength(5);
+
+    await userEvent.selectOptions(screen.getByLabelText(/Show/), '10');
+    expect(bodyRows()).toHaveLength(10);
+  });
+
+  it('adds custom class names', () => {
+    render(<DataTable columns={columns} data={data} classNames={{ root: 'my-table', button: 'my-button' }} searchable={false}/>);
+    expect(document.querySelector('.hrnet-table')).toHaveClass('my-table');
+    expect(screen.getByRole('button', { name: 'Next' })).toHaveClass('hrnet-table__button', 'my-button');
+    expect(screen.queryByRole('searchbox')).not.toBeInTheDocument();
   });
 });

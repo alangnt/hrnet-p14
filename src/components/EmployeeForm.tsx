@@ -2,8 +2,8 @@ import { memo, type ReactNode } from "react";
 import type { User } from "../types/users";
 import { states } from "../utils/states.ts";
 import { departments } from "../utils/departments.ts";
-import DateInput from "./DateInput.tsx";
-import Select from "./Select.tsx";
+import { DateInput, type DateInputProps } from "hrnet-p14-date-input";
+import { Select, type SelectProps } from "hrnet-p14-select";
 import TextInput from "./TextInput.tsx";
 
 type EmployeeFormProps = {
@@ -11,7 +11,11 @@ type EmployeeFormProps = {
 }
 
 const stateOptions = states.map((state) => ({ value: state.abbreviation, label: state.name }));
-const departmentOptions = departments.map((department) => ({ value: department, label: department }));
+
+// Reuse the app's field styles on the hrnet-p14-* components
+const fieldClassNames = { className: "field", labelClassName: "field-label" };
+const AppDateInput = (props: DateInputProps) => <DateInput {...fieldClassNames} inputClassName="form-input" {...props}/>;
+const AppSelect = (props: SelectProps) => <Select {...fieldClassNames} selectClassName="form-input" {...props}/>;
 
 function FormSection({ title, description, children }: { title: string; description: string; children: ReactNode }) {
   return (
@@ -52,7 +56,7 @@ function EmployeeForm({ onSubmit }: EmployeeFormProps) {
       <FormSection title="Personal information" description="The employee's identity.">
         <TextInput id="first-name" name="firstName" label="First Name" required autoComplete="given-name"/>
         <TextInput id="last-name" name="lastName" label="Last Name" required autoComplete="family-name"/>
-        <DateInput id="date-of-birth" name="dateOfBirth" label="Date of Birth" required/>
+        <AppDateInput id="date-of-birth" name="dateOfBirth" label="Date of Birth" max={new Date()} required/>
       </FormSection>
 
       <FormSection title="Address" description="Where the employee lives.">
@@ -60,7 +64,7 @@ function EmployeeForm({ onSubmit }: EmployeeFormProps) {
           <TextInput id="street" name="street" label="Street" required autoComplete="street-address"/>
         </div>
         <TextInput id="city" name="city" label="City" required autoComplete="address-level2"/>
-        <Select id="state" name="state" label="State" options={stateOptions}/>
+        <AppSelect id="state" name="state" label="State" options={stateOptions}/>
         <TextInput
           id="zip-code"
           name="zipCode"
@@ -75,8 +79,8 @@ function EmployeeForm({ onSubmit }: EmployeeFormProps) {
       </FormSection>
 
       <FormSection title="Employment" description="Role and contract details.">
-        <Select id="department" name="department" label="Department" options={departmentOptions}/>
-        <DateInput id="start-date" name="startDate" label="Start Date" required/>
+        <AppSelect id="department" name="department" label="Department" options={departments}/>
+        <AppDateInput id="start-date" name="startDate" label="Start Date" required/>
       </FormSection>
 
       <div className="form-actions">

@@ -1,0 +1,44 @@
+.hrnet-date-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: inherit;
+}
+
+.hrnet-date-input__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.hrnet-date-input__control {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+  font-size: 14px;
+}
+
+.hrnet-date-input__control:hover {
+  border-color: #94a3b8;
+}
+
+.hrnet-date-input__control:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px #e0e7ff;
+}
+
+.hrnet-date-input__control:user-invalid {
+  border-color: #ef4444;
+}
+
+.hrnet-date-input__hint {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}

@@ -1,0 +1,41 @@
+{
+  "name": "hrnet-p14-data-table",
+  "version": "1.0.0",
+  "description": "Lightweight, accessible React data table with search, sorting and pagination (replacement for jQuery DataTables in HRnet)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/data-table.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json && cp src/data-table.css dist/data-table.css",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "table",
+    "datatable",
+    "datagrid",
+    "sort",
+    "pagination",
+    "a11y"
+  ],
+  "author": "Alan Geirnaert",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=19.3.1",
+    "react-dom": ">=19.3.1"
+  }
+}

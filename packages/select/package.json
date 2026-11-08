@@ -1,0 +1,39 @@
+{
+  "name": "hrnet-p14-select",
+  "version": "1.0.0",
+  "description": "Accessible labelled React select (dropdown) component (replacement for the jQuery UI selectmenu in HRnet)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/select.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json && cp src/select.css dist/select.css",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "select",
+    "dropdown",
+    "form",
+    "a11y"
+  ],
+  "author": "Alan Geirnaert",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=19.3.1",
+    "react-dom": ">=19.3.1"
+  }
+}

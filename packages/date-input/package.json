@@ -1,0 +1,39 @@
+{
+  "name": "hrnet-p14-date-input",
+  "version": "1.0.0",
+  "description": "Accessible labelled React date input built on the native date picker (replacement for the jQuery datetimepicker in HRnet)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./style.css": "./dist/date-input.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.json && cp src/date-input.css dist/date-input.css",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "react",
+    "date",
+    "datepicker",
+    "form",
+    "a11y"
+  ],
+  "author": "Alan Geirnaert",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=19.3.1",
+    "react-dom": ">=19.3.1"
+  }
+}

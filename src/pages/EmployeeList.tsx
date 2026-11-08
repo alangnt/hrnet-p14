@@ -1,5 +1,5 @@
+import { DataTable, type Column, type DataTableClassNames } from "hrnet-p14-data-table";
 import type { User } from "../types/users";
-import DataTable, { type Column } from "../components/DataTable.tsx";
 import { useEmployeeStore } from "../store/employees.ts";
 
 const columns: Column<User>[] = [
@@ -14,6 +14,12 @@ const columns: Column<User>[] = [
   { title: 'Zip Code', data: 'zipCode' },
 ];
 
+const tableClassNames: DataTableClassNames = {
+  select: 'form-input w-auto',
+  input: 'form-input w-56',
+  button: 'button button-secondary',
+};
+
 function EmployeeList() {
   const employees = useEmployeeStore((state) => state.employees);
 
@@ -25,7 +31,13 @@ function EmployeeList() {
       </div>
 
       <div className="card overflow-hidden">
-        <DataTable columns={columns} data={employees}/>
+        <DataTable
+          columns={columns}
+          data={employees}
+          caption="Current employees"
+          searchPlaceholder="Name, city, department…"
+          classNames={tableClassNames}
+        />
       </div>
     </main>
   )

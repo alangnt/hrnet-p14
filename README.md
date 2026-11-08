@@ -22,16 +22,32 @@ bun run lint
 | `src/store/employees.ts` | Global state (Zustand) persisted to `localStorage`. Migrates data saved by the jQuery version |
 | `src/components/Layout.tsx` | Shared header and navigation |
 | `src/components/EmployeeForm.tsx` | Employee form with native HTML validation |
-| `src/components/DataTable.tsx` | Generic table: search, sorting, page size, pagination |
-| `src/components/TextInput.tsx` / `DateInput.tsx` / `Select.tsx` | Form fields (label + input) |
-| `packages/react-modal/` | Modal component, published on npm as [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal) |
+| `src/components/TextInput.tsx` | Text field (label + input) |
+| `packages/` | The four React components that replace the jQuery plugins, each published on npm (see below) |
 
-## Publishing the modal package to npm
+## npm packages
 
-The modal lives in `packages/react-modal/` and is published as [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal).
+Each jQuery plugin is replaced by a standalone React component. Each one lives in `packages/`, has its own README, tests and default CSS, and is published on npm:
+
+| Package | Replaces | Folder |
+| --- | --- | --- |
+| [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal) | `jquery.modal.js` | [`packages/react-modal`](./packages/react-modal) |
+| [`hrnet-p14-data-table`](https://www.npmjs.com/package/hrnet-p14-data-table) | DataTables | [`packages/data-table`](./packages/data-table) |
+| [`hrnet-p14-select`](https://www.npmjs.com/package/hrnet-p14-select) | jQuery UI selectmenu | [`packages/select`](./packages/select) |
+| [`hrnet-p14-date-input`](https://www.npmjs.com/package/hrnet-p14-date-input) | jQuery datetimepicker | [`packages/date-input`](./packages/date-input) |
 
 ```bash
-cd packages/react-modal
+npm install hrnet-p14-modal hrnet-p14-data-table hrnet-p14-select hrnet-p14-date-input
+```
+
+The HRnet app installs them from npm like any other consumer. It doesn't import their default CSS: it adds its Tailwind styles through each component's `className` / `classNames` props.
+
+## Publishing a package to npm
+
+Run these commands from the package's folder (`packages/react-modal`, `packages/data-table`, `packages/select` or `packages/date-input`):
+
+```bash
+cd packages/data-table
 
 npm login                  # log in to your npm account (Bun has no login command)
 bun pm whoami              # check which account you are logged in as
@@ -42,16 +58,16 @@ bun publish                # builds dist/ through prepublishOnly, then publishes
 
 `bun publish` reuses the credentials that `npm login` saves in `~/.npmrc`. Alternatively, set the `NPM_CONFIG_TOKEN` environment variable to an npm access token, which also works in CI without npm.
 
-`bun publish --dry-run` lists the files that would be published without uploading anything. The registry refuses to publish a version that already exists, so bump the version before each publish.
+`bun publish --dry-run` lists the files that would be published without uploading anything. The registry refuses to publish a version that already exists, so bump the version before each publish (except the very first publish of a package at `1.0.0`).
 
 ## Replacing the jQuery plugins
 
 | jQuery plugin | Replacement |
 | --- | --- |
-| `jquery.modal.js` | **Converted** into its own React component and published on npm: [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal). Includes `role="dialog"`, focus trap and restore, Escape to close, and body scroll lock |
-| DataTables | `DataTable` component: search, sorting by column (`aria-sort`), 10/25/50/100 entries per page, pagination |
-| Date picker | `DateInput`: native `<input type="date">`. It is accessible, localized and mobile-friendly, and adds no JS |
-| Dropdown menus (selectmenu) | `Select`: native `<select>`, styled and fully keyboard accessible |
+| `jquery.modal.js` | [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal): `role="dialog"`, focus trap and restore, Escape to close, body scroll lock |
+| DataTables | [`hrnet-p14-data-table`](https://www.npmjs.com/package/hrnet-p14-data-table): search, sorting by column (`aria-sort`), 10/25/50/100 entries per page, pagination, custom cell rendering |
+| Date picker | [`hrnet-p14-date-input`](https://www.npmjs.com/package/hrnet-p14-date-input): native `<input type="date">`. It is accessible, localized and mobile-friendly, and adds no JS calendar |
+| Dropdown menus (selectmenu) | [`hrnet-p14-select`](https://www.npmjs.com/package/hrnet-p14-select): native `<select>` with a label, placeholder and hint, styled and fully keyboard accessible |
 
 ## Lighthouse audits
 

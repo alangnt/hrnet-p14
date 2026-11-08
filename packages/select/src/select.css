@@ -1,0 +1,46 @@
+.hrnet-select {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: inherit;
+}
+
+.hrnet-select__label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.hrnet-select__control {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 8px 40px 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") no-repeat right 10px center / 20px;
+  color: #0f172a;
+  font: inherit;
+  font-size: 14px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.hrnet-select__control:hover {
+  border-color: #94a3b8;
+}
+
+.hrnet-select__control:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px #e0e7ff;
+}
+
+.hrnet-select__control:user-invalid {
+  border-color: #ef4444;
+}
+
+.hrnet-select__hint {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
