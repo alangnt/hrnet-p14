@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.4",
-    "hrnet-p14-data-table": "file:./packages/data-table",
-    "hrnet-p14-date-input": "file:./packages/date-input",
+    "hrnet-p14-data-table": "^1.0.0",
+    "hrnet-p14-date-input": "^1.0.0",
     "hrnet-p14-modal": "^1.0.0",
-    "hrnet-p14-select": "file:./packages/select",
+    "hrnet-p14-select": "^1.0.0",
     "lucide-react": "^1.69.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
