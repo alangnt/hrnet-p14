@@ -13,7 +13,7 @@ function Layout() {
       <header className="sticky top-0 z-10 border-b border-slate-200 bg-white/90 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-4 sm:px-6">
           <NavLink to="/" className="flex items-center gap-x-2 text-lg font-bold text-slate-900">
-            <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-600 text-white">
+            <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-600 text-white">
               <Users className="h-4 w-4"/>
             </span>
             <span className="max-sm:sr-only">HRnet</span>
