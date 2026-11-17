@@ -19,46 +19,24 @@ bun run lint
 | --- | --- |
 | `src/App.tsx` | "Create Employee" page |
 | `src/pages/EmployeeList.tsx` | "Current Employees" page (lazy-loaded route) |
-| `src/store/employees.ts` | Global state (Zustand) persisted to `localStorage`. Migrates data saved by the jQuery version |
+| `src/store/store.ts` | Redux store (Redux Toolkit), typed `useAppDispatch` / `useAppSelector` hooks, persistence to `localStorage` |
+| `src/store/employees.ts` | `employees` slice (`addEmployee`, `selectEmployees`). Migrates data saved by the jQuery version |
 | `src/components/Layout.tsx` | Shared header and navigation |
-| `src/components/EmployeeForm.tsx` | Employee form with native HTML validation |
+| `src/components/EmployeeForm.tsx` | Employee form with native HTML validation (no digits in names and city, 5-digit zip code) |
 | `src/components/TextInput.tsx` | Text field (label + input) |
-| `packages/` | The four React components that replace the jQuery plugins, each published on npm (see below) |
 
 ## npm packages
 
-Each jQuery plugin is replaced by a standalone React component. Each one lives in `packages/`, has its own README, tests and default CSS, and is published on npm:
+Each jQuery plugin is replaced by a standalone React component published on npm. Their source code, tests and publishing instructions live in a separate repository: `hrnet-p14-components`.
 
-| Package | Replaces | Folder |
-| --- | --- | --- |
-| [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal) | `jquery.modal.js` | [`packages/react-modal`](./packages/react-modal) |
-| [`hrnet-p14-data-table`](https://www.npmjs.com/package/hrnet-p14-data-table) | DataTables | [`packages/data-table`](./packages/data-table) |
-| [`hrnet-p14-select`](https://www.npmjs.com/package/hrnet-p14-select) | jQuery UI selectmenu | [`packages/select`](./packages/select) |
-| [`hrnet-p14-date-input`](https://www.npmjs.com/package/hrnet-p14-date-input) | jQuery datetimepicker | [`packages/date-input`](./packages/date-input) |
-
-```bash
-npm install hrnet-p14-modal hrnet-p14-data-table hrnet-p14-select hrnet-p14-date-input
-```
+| Package | Replaces |
+| --- | --- |
+| [`hrnet-p14-modal`](https://www.npmjs.com/package/hrnet-p14-modal) | `jquery.modal.js` |
+| [`hrnet-p14-data-table`](https://www.npmjs.com/package/hrnet-p14-data-table) | DataTables |
+| [`hrnet-p14-select`](https://www.npmjs.com/package/hrnet-p14-select) | jQuery UI selectmenu |
+| [`hrnet-p14-date-input`](https://www.npmjs.com/package/hrnet-p14-date-input) | jQuery datetimepicker |
 
 The HRnet app installs them from npm like any other consumer. It doesn't import their default CSS: it adds its Tailwind styles through each component's `className` / `classNames` props.
-
-## Publishing a package to npm
-
-Run these commands from the package's folder (`packages/react-modal`, `packages/data-table`, `packages/select` or `packages/date-input`):
-
-```bash
-cd packages/data-table
-
-npm login                  # log in to your npm account (Bun has no login command)
-bun pm whoami              # check which account you are logged in as
-
-bun pm version patch       # bump the version (patch | minor | major)
-bun publish                # builds dist/ through prepublishOnly, then publishes
-```
-
-`bun publish` reuses the credentials that `npm login` saves in `~/.npmrc`. Alternatively, set the `NPM_CONFIG_TOKEN` environment variable to an npm access token, which also works in CI without npm.
-
-`bun publish --dry-run` lists the files that would be published without uploading anything. The registry refuses to publish a version that already exists, so bump the version before each publish (except the very first publish of a package at `1.0.0`).
 
 ## Replacing the jQuery plugins
 

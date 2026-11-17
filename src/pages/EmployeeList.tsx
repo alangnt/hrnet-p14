@@ -1,6 +1,7 @@
 import { DataTable, type Column, type DataTableClassNames } from "hrnet-p14-data-table";
 import type { User } from "../types/users";
-import { useEmployeeStore } from "../store/employees.ts";
+import { selectEmployees } from "../store/employees.ts";
+import { useAppSelector } from "../store/store.ts";
 
 const columns: Column<User>[] = [
   { title: 'First Name', data: 'firstName' },
@@ -21,7 +22,7 @@ const tableClassNames: DataTableClassNames = {
 };
 
 function EmployeeList() {
-  const employees = useEmployeeStore((state) => state.employees);
+  const employees = useAppSelector(selectEmployees);
 
   return (
     <main className="page max-w-7xl">

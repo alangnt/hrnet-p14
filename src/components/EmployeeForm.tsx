@@ -10,6 +10,9 @@ type EmployeeFormProps = {
   onSubmit: (employee: Omit<User, "id">) => void;
 }
 
+// Names and cities can't contain digits (checked by the native form validation)
+const noDigits = { pattern: "[^0-9]*", title: "Numbers are not allowed" };
+
 const stateOptions = states.map((state) => ({ value: state.abbreviation, label: state.name }));
 
 // Reuse the app's field styles on the hrnet-p14-* components
@@ -54,8 +57,8 @@ function EmployeeForm({ onSubmit }: EmployeeFormProps) {
       className="card overflow-hidden"
     >
       <FormSection title="Personal information" description="The employee's identity.">
-        <TextInput id="first-name" name="firstName" label="First Name" required autoComplete="given-name"/>
-        <TextInput id="last-name" name="lastName" label="Last Name" required autoComplete="family-name"/>
+        <TextInput id="first-name" name="firstName" label="First Name" {...noDigits} required autoComplete="given-name"/>
+        <TextInput id="last-name" name="lastName" label="Last Name" {...noDigits} required autoComplete="family-name"/>
         <AppDateInput id="date-of-birth" name="dateOfBirth" label="Date of Birth" max={new Date()} required/>
       </FormSection>
 
@@ -63,7 +66,7 @@ function EmployeeForm({ onSubmit }: EmployeeFormProps) {
         <div className="sm:col-span-2">
           <TextInput id="street" name="street" label="Street" required autoComplete="street-address"/>
         </div>
-        <TextInput id="city" name="city" label="City" required autoComplete="address-level2"/>
+        <TextInput id="city" name="city" label="City" {...noDigits} required autoComplete="address-level2"/>
         <AppSelect id="state" name="state" label="State" options={stateOptions}/>
         <TextInput
           id="zip-code"

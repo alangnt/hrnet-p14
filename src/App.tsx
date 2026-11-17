@@ -5,16 +5,17 @@ import { Modal } from "hrnet-p14-modal";
 import { CircleCheck } from "lucide-react";
 import type { User } from "./types/users";
 import EmployeeForm from "./components/EmployeeForm.tsx";
-import { useEmployeeStore } from "./store/employees.ts";
+import { addEmployee } from "./store/employees.ts";
+import { useAppDispatch } from "./store/store.ts";
 
 function App() {
   const [isEmployeeCreated, setIsEmployeeCreated] = useState<boolean>(false);
-  const addEmployee = useEmployeeStore((state) => state.addEmployee);
+  const dispatch = useAppDispatch();
 
   const saveEmployee = useCallback((employee: Omit<User, "id">) => {
-    addEmployee(employee);
+    dispatch(addEmployee(employee));
     setIsEmployeeCreated(true);
-  }, [addEmployee]);
+  }, [dispatch]);
 
   const closeModal = useCallback(() => setIsEmployeeCreated(false), []);
 
