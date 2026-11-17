@@ -57,12 +57,12 @@ Audits ran on the **production build** (`bun run build && bun run preview`) with
 | Accessibility | 91 | **100** | 96 | **100** |
 | Best Practices | 85 | **100** | 85 | **100** |
 | SEO | 90 | **100** | 90 | **100** |
-| First Contentful Paint | 0.6 s | **0.3 s** | 0.5 s | **0.3 s** |
-| Largest Contentful Paint | 0.6 s | **0.3 s** | 0.5 s | **0.4 s** |
-| Speed Index | 0.6 s | **0.4 s** | 0.5 s | **0.3 s** |
+| First Contentful Paint | 0.6 s | **0.4 s** | 0.5 s | **0.4 s** |
+| Largest Contentful Paint | 0.6 s | **0.4 s** | 0.5 s | **0.4 s** |
+| Speed Index | 0.6 s | **0.5 s** | 0.5 s | **0.4 s** |
 | Total Blocking Time | 0 ms | 0 ms | 0 ms | 0 ms |
 | Cumulative Layout Shift | 0.006 | **0** | 0 | 0 |
 | Network requests | 12 | **6** | 9 | **6** |
-| Total transfer size | 260 KiB | **94 KiB** | 64 KiB | 96 KiB |
+| Total transfer size | 260 KiB | **101 KiB** | 64 KiB | 103 KiB |
 
 The jQuery app was served as static files from its original repository. It loads jQuery, jQuery UI, DataTables, jquery.modal and the datetimepicker from several CDNs. The React app ships one JS bundle and one CSS file. The Employee List page is lazy-loaded, so after the first visit it only adds a 1.8 kB chunk (gzipped).
